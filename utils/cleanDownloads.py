@@ -2,25 +2,8 @@ import os
 from pathlib import Path
 import shutil
 
+from helperFunctions import get_all_file_types_in_folder
 
-
-def cleanFolder():
-    folder_path = '/Users/aleksandermalde/downloads'
-    os.chdir(folder_path)  # Changes the current working directory
-    print("Current directory:", os.getcwd())
-
-    files = os.listdir(folder_path)
-    print(files)
-
-def get_all_file_types_in_folder(folder: str, recursive: bool = False) -> list: 
-    folder = Path(folder)
-    if recursive:
-        files = folder.rglob('*')
-    else:
-        files = folder.iterdir()
-
-    extensions = {file.suffix.lower().lstrip('.') for file in files if file.is_file()}
-    return list(extensions)
 
 def organiseFiles(search_root, file_type): 
 
@@ -39,7 +22,6 @@ def organiseFiles(search_root, file_type):
     for file in all_files.rglob('*'): 
         
         if file.is_file() and file.suffix.lower() == '.'+file_type:
-    #        if file.is_file():
             number_of_files +=1
             target = folder / f'{file.parent.name}_{file.name}' 
             if file.resolve() != target.resolve():
